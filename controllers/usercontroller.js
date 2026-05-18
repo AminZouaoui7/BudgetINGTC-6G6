@@ -97,12 +97,12 @@ const updateuser=async(req,res)=>{
 }
 const activateUser = async (req, res) => {
   try {
-    if (req.user?.role !== "admin") {
+   /*  if (req.user?.role !== "admin") {
       return res.status(403).json({ message: "Accès interdit." });
     }
- 
+  */
     const { id } = req.params;
-    const existing = await User.findByPk(id);
+    const existing = await user.findByPk(id);
  
     if (!existing) {
       return res.status(404).json({ message: "Utilisateur introuvable." });
@@ -112,7 +112,7 @@ const activateUser = async (req, res) => {
  
     return res.status(200).json({
       message: "Compte activé avec succès.",
-      user: sanitizeUser(existing),
+      user: existing,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
