@@ -1,0 +1,10 @@
+const express = require("express")
+const router = express.Router()
+const { createComment, deleteComment, getComments } = require("../controllers/commentcontroller")
+const { authenticateToken } = require("../middleware/authmiddleware")
+const authorize = require("../middleware/authorize")
+const { route } = require("./budgetroute")
+router.post("/create", authenticateToken, authorize("admin","user"), createComment)
+router.delete("/delete/:id", authenticateToken, authorize("admin","user"), deleteComment)
+router.get("/getcomments", authenticateToken, getComments)
+module.exports = router
