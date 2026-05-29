@@ -1,0 +1,13 @@
+const express = require("express")
+const router = express.Router()
+const { createTransaction, getTransactionById, updateTransaction, deleteTransaction, getTransactionsByUser, getTransactionsByBudget } = require("../controllers/transactioncontroller")
+const { authenticateToken } = require("../middleware/authmiddleware")
+const authorize = require("../middleware/authorize")
+router.post("/create", authenticateToken, authorize("admin","user"), createTransaction)
+router.get("/getall", authenticateToken, getTransactionsByUser)
+router.get("/getbyid/:id", authenticateToken, getTransactionById)
+router.put("/update/:id", authenticateToken, authorize("admin","user"), updateTransaction)
+router.delete("/delete/:id", authenticateToken, authorize("admin","user"), deleteTransaction)
+router.get("/user", authenticateToken, getTransactionsByUser)
+router.get("/budget/:budgetId", authenticateToken, getTransactionsByBudget)
+module.exports = router
